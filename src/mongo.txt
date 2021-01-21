@@ -141,7 +141,119 @@ db.SarahSamples.find({})
 
 db.SarahSamples.find({"departure.city": "Paris"}, {delayed: 1, aircraftCode: 1, _id: 0})
 
+db.SarahSamples.insertMany(
+[
+{
+    "type" : "International",
+    "delayed" : false,
+    "duration" : 120,
+	"distanceKm": 1730,
+    "departure" : {
+        "code": "CDG",
+        "city": "Paris",
+        "country":"France",
+        "runwayLength": 4215,
+		"location": {
+			"type": "Point",
+			"coordinates": [2.3, 48.8]
+		}
+    },
+    "destination" : {
+        "code": "LIS",
+        "city": "Lisabon",
+        "country":"Portugal",
+        "runwayLength": 3805,
+		"location": {
+			"type": "Point",
+			"coordinates": [-9.1, 38.7]
+		}
+    },
+    "aircraftCode" : "eede6be6-f716-4e2e-bf81-885f0a16a50c",
+    "crew":[
+        {"name": "Pierre Cotard", "position": "Captain", "nationality": "France", "hoursSlept": 4},
+        {"name": "Amanda Lucas", "position": "Attendant", "hoursSlept": 6},
+        {"name": "Joe Stan", "position": "Attendant", "nationality": "UK", "hoursSlept": 8}
+    ]
+},
+{
+    "type" : "International",
+    "delayed" : true,
+    "duration" : 260,
+	"distanceKm": 3200,
+    "departure" : {
+        "code": "IST",
+        "city": "Istanbul",
+        "country":"Turkey",
+        "runwayLength": 4100,
+		"location": {
+			"type": "Point",
+			"coordinates": [28.9, 41.0]
+		}
+    },
+    "destination" : {
+        "code": "LIS",
+        "city": "Lisabon",
+        "country":"Portugal",
+        "runwayLength": 3805,
+		"location": {
+			"type": "Point",
+			"coordinates": [-9.1, 38.7]
+		}
+    },
+    "aircraftCode" : "1b7ad0de-5836-489b-9791-5a81a51cdb81",
+    "crew":[
+        {"name": "Hakan Antal", "position": "Captain", "nationality": "Turkey", "hoursSlept": 5},
+        {"name": "Anna Hassan", "position": "Attendant", "hoursSlept": 4},
+        {"name": "Adina Popescu", "position": "Attendant", "hoursSlept": 9}
+    ]
+},
+{
+    "type" : "Internal",
+    "delayed" : true,
+    "duration" : 80,
+	"distanceKm": 400,
+    "departure" : {
+        "code": "CDG",
+        "city": "Paris",
+        "country":"France",
+        "runwayLength": 4215,
+		"location": {
+			"type": "Point",
+			"coordinates": [2.3, 48.8]
+		}
+    },
+    "destination" : {
+        "code": "LYS",
+        "city": "Lyon",
+        "country":"France",
+        "runwayLength": 4000,
+		"location": {
+			"type": "Point",
+			"coordinates": [4.8, 45.7]
+		}
+    },
+    "aircraftCode" : "51192f6b-9c26-4ef9-b843-cf241f326091",
+    "crew":[]
+}
+]
+)
 
+db.SarahSamples.find({})
 
+//DELETE one
+db.SarahSamples.find({"departure.city": "Paris", "destination.city": "Lisabon"}, {aircraftCode: 1})
 
+db.SarahSamples.find({"departure.city": "Paris", "destination.city": "Lisabon"}).count() //result: 1
 
+db.SarahSamples.deleteOne({"departure.city": "Paris", "destination.city": "Lisabon"})
+
+db.SarahSamples.find({"departure.city": "Paris", "destination.city": "Lisabon"}).count() //result: 0
+
+//DELETE many
+db.SarahSamples.find({})
+
+db.SarahSamples.deleteMany({"type": "Internal"})
+
+db.SarahSamples.find({})
+
+//.remove can work like .deleteOne --provide a second parameter, true-- or .deleteMany --just provide 1 parameter. It can also delete all the documents --.remove({})-- so be very careful using it!
