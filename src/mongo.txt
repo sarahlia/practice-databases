@@ -1,0 +1,147 @@
+db.movies.find( {} )
+
+db.movies.find( {} ).pretty()
+
+db.movies.find( {runtime: 11} ).pretty()
+
+db.movies.find( {runtime: 11} ).pretty().limit(3)
+
+db.movies.find( {runtime: 11}, {title:1} ).pretty().limit(3)
+
+db.movies.find( {runtime: 11}, {runtime:1, title:1, _id:0} ).pretty().limit(3)
+
+db.movies.find( {runtime: {$eq: 11}}, {runtime:1, title:1, _id:0} ).pretty().limit(5).sort({title: 1})
+
+db.movies.find( {runtime: {$eq: 11}}, {runtime:1, title:1, _id:0} ).pretty().limit(5).sort({title: -1})
+
+db.movies.find( {runtime: {$eq: 11}}, {runtime:1, title:1, _id:0} ).pretty().limit(5).sort({title: -1}).readConcern("majority")
+
+db.movies.find( {runtime: {$eq: 11}}, {runtime:1, title:1, _id:0} ).pretty().limit(5).sort({title: -1}).readConcern("linearizable").maxTimeMS(10000)
+
+//create a collection named SarahSamples in the Training database
+show dbs
+
+use Training
+
+db
+
+show collections
+
+db.createCollection("SarahSamples")
+
+db.SarahSamples.insertOne(
+{
+	"code": "1b7ad0de-5836-489b-9791-5a81a51cdb81",
+    "model" : "Boeing 737-400",
+    "minRunwayLength" : 1700,
+	"range": 3500,
+	"capacity": 189
+}
+)
+
+db.SarahSamples.insertMany(
+[
+{
+	"code": "eede6be6-f716-4e2e-bf81-885f0a16a50c",
+    "model" : "Boeing 737-800",
+    "minRunwayLength" : 2500,
+	"range": 5765,
+	"capacity": 200
+},
+{
+	"code": "1b7ad0de-5836-489b-9791-5a81a51cdb81",
+    "model" : "Airbus A320",
+    "minRunwayLength" : 2500,
+	"range": 6000,
+	"capacity": 150
+},
+{
+	"code": "a3faaef2-fe54-4949-928f-be93584da471",
+    "model" : "Airbus A319",
+    "minRunwayLength" : 2255,
+	"range": 6900,
+	"capacity": 124
+},
+{
+	"code": "eede6be6-f716-4e2e-bf81-885f0a16a50c",
+    "model" : "Boeing 737-900",
+    "minRunwayLength" : 2975,
+	"range": 5600,
+	"capacity": 215
+},
+{
+	"code": "51192f6b-9c26-4ef9-b843-cf241f326091",
+    "model" : "Embraer E-175",
+    "minRunwayLength" : 1261,
+	"range": 4000,
+	"capacity": 80
+},
+{
+	"code": "00126a63-f342-4ccd-ba86-4a7beecf10c0",
+    "model" : "Airbus A350",
+    "minRunwayLength" : 3200,
+	"range": 15000,
+	"capacity": 300
+},
+{
+	"code": "4f356f56-84dd-484f-a5f7-b960dfba5823",
+    "model" : "Boeing 747",
+    "minRunwayLength" : 3100,
+	"range": 14000,
+	"capacity": 467
+},
+{
+	"code": "0c3a60d6-8c99-472e-bf23-c1e689c5f6eb",
+    "model" : "ATR 72",
+    "minRunwayLength" : 1000,
+	"range": 3218,
+	"capacity": 78
+}
+]
+)
+
+db.SarahSamples.find({})
+
+db.SarahSamples.insertOne(
+{
+    "type" : "International",
+    "delayed" : false,
+    "duration" : 150,
+	"distanceKm": 1870,
+    "departure" : {
+        "code": "CDG",
+        "city": "Paris",
+        "country":"France",
+        "runwayLength": 4215,
+		"location": {
+			"type": "Point",
+			"coordinates": [2.3, 48.8]
+		}
+    },
+    "destination" : {
+        "code": "OTP",
+        "city": "Bucharest",
+        "country":"Romania",
+        "runwayLength": 3500,
+		"location": {
+			"type": "Point",
+			"coordinates": [26.1, 44.4]
+		}
+    },
+    "aircraftCode" : "1b7ad0de-5836-489b-9791-5a81a51cdb81",
+    "crew":[
+        {"name": "Renaud Cahun", "position": "Captain", "hoursSlept": 8},
+        {"name": "Nina Peltier", "position": "Attendant", "nationality": "France", "hoursSlept": 6},
+		{"name": "Lou Galopin", "position": "Attendant", "nationality": "France", "hoursSlept": 7}
+    ]
+}
+)
+
+db.SarahSamples.find({})
+
+db.SarahSamples.find({"departure.city": "Paris"}, {delayed: 1, aircraftCode: 1, _id: 0})
+
+
+
+
+
