@@ -257,3 +257,26 @@ db.SarahSamples.deleteMany({"type": "Internal"})
 db.SarahSamples.find({})
 
 //.remove can work like .deleteOne --provide a second parameter, true-- or .deleteMany --just provide 1 parameter. It can also delete all the documents --.remove({})-- so be very careful using it!
+
+//UPDATE
+db.SarahSamples.updateOne(
+    {model: {$eq: "Boeing 737-900"}},
+    {
+        $set: { "model": "Boeing 737 MAX" }
+    }
+)
+
+db.SarahSamples.updateOne(
+    {model: {$eq: "Boeing 747"}},
+    {
+        $set: { "model": "Boeing 737 MAX", "capacity": 500 }
+    }
+)
+
+db.SarahSamples.updateMany(
+    {model: {$eq: "Boeing 737 MAX"}},
+    {
+        $set: { "model": "Airbus A380" }
+    }
+)
+
